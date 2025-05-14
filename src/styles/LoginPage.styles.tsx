@@ -32,12 +32,27 @@ export const Form = styled.form`
     border-radius: 0.625rem;
     color: white;
     box-shadow: 0 0 2rem rgba(0, 0, 0, 0.5);
-    border: 2px solid transparent;
-    border-image-slice: 1;
-    border-width: 2px;
-    animation: ${borderGlow} 2s linear infinite;
-    border-image-source: linear-gradient(45deg, #ff0057, #00cfff);
     overflow: hidden;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 5px; /* border width */
+        background: linear-gradient(45deg, #ff0057, #00cfff);
+        border-radius: inherit;
+        z-index: -1;
+        mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        -webkit-mask-composite: destination-out;
+        box-sizing: border-box;
+    }
 `;
 
 export const Title = styled.h2`
