@@ -41,3 +41,74 @@ export const ScriptSmithIcon: React.FC<IconProps> = ({ size = 28, style }) => (
       <path d="M28 32l-6 4v-8l6 4Zm8 0l6-4v8l-6-4Z" fill="#E5E7EB" />
     </svg>
 );
+
+export const AgentPersonaIcon: React.FC<IconProps> = ({ size = 28, style }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+    <circle cx="9" cy="7" r="4"></circle>
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+  </svg>
+);
+
+export const UploadIcon: React.FC<IconProps> = ({ size = 16, style }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="white"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ ...style, color: 'white' }}
+  >
+    <path d="M12 16V5" />
+    <polyline points="6 9 12 3 18 9" />
+    <path d="M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" />
+  </svg>
+);
+
+export const AddIcon: React.FC<IconProps> = ({ size = 16, style }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="white"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ ...style, color: 'white' }}
+  >
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+
+export const ChartColumnIcon: React.FC<IconProps> = ({ size = 24, style }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#cf17b9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chart-column-icon lucide-chart-column">
+    <path d="M3 3v16a2 2 0 0 0 2 2h16"/>
+    <path d="M18 17V9"/>
+    <path d="M13 17V5"/>
+    <path d="M8 17v-3"/>
+  </svg>  
+);
+
+export const BenchmarkIcon: React.FC<IconProps> = ({ size = 28, style }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 64 64" style={style} fill="none">
+    {/* Base */}
+    <rect x="8" y="40" width="48" height="8" rx="2" fill="#6366F1" />
+    
+    {/* Columns/Bars */}
+    <rect x="14" y="20" width="8" height="20" fill="#818CF8" />
+    <rect x="28" y="12" width="8" height="28" fill="#A5B4FC" />
+    <rect x="42" y="24" width="8" height="16" fill="#C7D2FE" />
+    
+    {/* Speed indicator */}
+    <circle cx="42" cy="16" r="6" fill="#F472B6" />
+    <path d="M42 12v8M38 16h8" stroke="#FFFFFF" strokeWidth="1.5" />
+  </svg>
+);

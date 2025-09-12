@@ -40,6 +40,12 @@ export const ColoredReporting = styled.span`
     letter-spacing: 1px;
 `;
 
+export const ColoredBenchmarking = styled.span`
+    color: rgb(167, 139, 250);
+    font-weight: bold;
+    letter-spacing: 1px;
+`;
+
 export const CardsWrapper = styled.div`
     display: flex;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -63,11 +69,16 @@ export const FeatureCard = styled.div`
     box-shadow: 0 0 15px rgba(0, 221, 255, 0.15), 0 0 25px rgba(255, 0, 122, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     z-index: 1;
+    cursor: pointer;
 
     &:hover {
         transform: translateY(-5px);
         box-shadow: 0 0 25px rgba(0, 221, 255, 0.25), 0 0 35px rgba(255, 0, 122, 0.15);
         z-index: 2;
+    }
+
+    &:active {
+        transform: translateY(-2px);
     }
 
     h3 {

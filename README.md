@@ -1,12 +1,58 @@
-# React + Vite
+# Optimized Conversation Components
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project contains optimized React components for displaying conversations between personas and agents.
 
-Currently, two official plugins are available:
+## Component Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The conversation components have been optimized with the following structure:
 
-## Expanding the ESLint configuration
+### Components
+- `LiveConversation`: Displays a single conversation between a persona and an agent
+- `LiveConversationGrid`: Container for displaying multiple conversations in a list view
+- `ConversationListView`: List view for displaying conversations
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Types
+- `conversation.types.ts`: Contains shared type definitions for conversation components
+
+### Styles
+- `ConversationList.styles.tsx`: Contains styled components for conversation list view
+
+### Utils
+- `conversation.utils.ts`: Contains utility functions for conversation components
+
+## Usage
+
+```tsx
+import { LiveConversationGrid } from './components';
+
+// Example data
+const conversations = [
+  {
+    conversationId: '1',
+    personaId: 'persona1',
+    personaName: 'John Doe',
+    agentName: 'Tech Agent',
+    messageCount: 5,
+    status: 'Live',
+    startTime: new Date()
+  },
+  // More conversations...
+];
+
+// Render the component
+const MyComponent = () => (
+  <LiveConversationGrid 
+    conversations={conversations}
+    onViewConversation={(id) => console.log(`View conversation ${id}`)}
+    onDeleteConversation={(id) => console.log(`Delete conversation ${id}`)}
+  />
+);
+```
+
+## Optimization Notes
+
+1. Styles have been separated into dedicated style files
+2. Types have been centralized in a types file
+3. Utility functions have been extracted to a utils file
+4. Components have been simplified to focus on the list view functionality
+5. Unused view modes have been removed
