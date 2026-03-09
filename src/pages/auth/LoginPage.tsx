@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Form, GlowingAI, GlowingAutomation, Heading1, Heading2, Heading3, Input, InputGroup, Label, LinkText, Row, Title } from '../../styles/LoginPage.styles';
+import { Button, Container, Form, UnderlineText, GlowingAutomation, Heading1, Heading2, Heading3, Input, InputGroup, Label, Row, Title, RememberMe, SystemStatus, Footer, FooterLink, IconInput, Header, HeaderLogo, HeaderLinks, HeaderLink, TextLabel, ForgotPasswordButton, SignUpButton, DontHaveAccountText, AnnouncementBadge, AnnouncementDot, AnnouncementText, Dot, StatsContainer, StatItem, StatValue, StatLabel, StatDivider, CopyrightText } from '../../styles/LoginPage.styles';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
@@ -9,6 +9,7 @@ const LoginPage: React.FC = () => {
     const [passwordFocused, setPasswordFocused] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [formError, setFormError] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
 
     const navigate = useNavigate();
 
@@ -16,22 +17,17 @@ const LoginPage: React.FC = () => {
         e.preventDefault();
         setFormError('');
         
-        // Basic validation
         if (!email || !password) {
             setFormError('Please fill in all fields');
             return;
         }   
         
-        // Simulate loading state for better UX
         setIsLoading(true);
         
         try {
-            // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1500));
-            console.log('Login attempt with:', { email, password });
+            console.log('Login attempt with:', { email, password, rememberMe });
             navigate('/home');
-            // Here you would normally handle authentication logic
-            // For now we just log the credentials
         } catch (error) {
             setFormError('An error occurred. Please try again.');
             console.error('Login error:', error);
@@ -42,14 +38,46 @@ const LoginPage: React.FC = () => {
 
     return (
         <Container>
-            <Heading1>TEST SMITH - AI</Heading1>
-            <Heading2>Login to access your smart testing platform</Heading2>
-            <Heading3>using <GlowingAI>AI</GlowingAI> & <GlowingAutomation>Automation</GlowingAutomation></Heading3>
+            <CopyrightText>© 2026 TestForge AI</CopyrightText>
+            <Header>
+                <HeaderLogo>
+                    <img src="/icons/logo.png" alt="TestForge AI Logo" style={{width: "95px",height: "75px",transform: "scale(1.5)",transformOrigin: "center",display: "block", margin: "0 auto",}}/>
+                    <span style={{marginLeft: "-60px"}}>TestForge AI</span>
+                </HeaderLogo>
+                <HeaderLinks>
+                    <HeaderLink href="#">Help</HeaderLink>
+                    <HeaderLink href="#">Docs</HeaderLink>
+                </HeaderLinks>
+            </Header>
+            <Heading1>TestForge AI</Heading1>
+            <Dot>.</Dot>
+            <Heading2>Unify Your Quality Engineering with</Heading2>
+            <Heading3><UnderlineText>Intelligence</UnderlineText> and <GlowingAutomation>Scale</GlowingAutomation>.</Heading3>
+            <AnnouncementBadge>
+                <AnnouncementDot />
+                <AnnouncementText>New: AI Testing Workbench V1.0</AnnouncementText>
+            </AnnouncementBadge>
+            <StatsContainer>
+                <StatItem>
+                    <StatValue>97.8%</StatValue>
+                    <StatLabel>Reliability</StatLabel>
+                </StatItem>
+                <StatDivider />
+                <StatItem>
+                    <StatValue>150+</StatValue>
+                    <StatLabel>Tools Unified</StatLabel>
+                </StatItem>
+                <StatDivider />
+                <StatItem>
+                    <StatValue>1.2M</StatValue>
+                    <StatLabel>Tests Run</StatLabel>
+                </StatItem>
+            </StatsContainer>
             <Form onSubmit={handleSubmit}>
                 <Title>Login</Title>
                 {formError && (
                     <div style={{ 
-                        color: '#ff0057', 
+                        color: ' #007BFF', 
                         textAlign: 'center', 
                         marginBottom: '1rem',
                         fontSize: '0.9rem'
@@ -58,32 +86,47 @@ const LoginPage: React.FC = () => {
                     </div>
                 )}
                 <InputGroup>
-                    <Label isFocused={emailFocused} hasContent={email.length > 0}>Email</Label>
-                    <Input 
-                        type="email" 
-                        placeholder="Email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                        onFocus={() => setEmailFocused(true)} 
-                        onBlur={() => setEmailFocused(false)}
-                        disabled={isLoading}
-                    />
+                    <TextLabel>Email Address</TextLabel>
+                    <IconInput>
+                        <i className="icon-email" />
+                        <Input 
+                            type="email" 
+                            placeholder="name@company.com" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)}
+                            onFocus={() => setEmailFocused(true)} 
+                            onBlur={() => setEmailFocused(false)}
+                            disabled={isLoading}
+                        />
+                    </IconInput>
                 </InputGroup>
                 <InputGroup>
-                    <Label isFocused={passwordFocused} hasContent={password.length > 0}>Password</Label>
-                    <Input 
-                        type="password" 
-                        placeholder="Password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        onFocus={() => setPasswordFocused(true)} 
-                        onBlur={() => setPasswordFocused(false)}
-                        disabled={isLoading}
-                    />
+                    <TextLabel>Password</TextLabel>
+                    <ForgotPasswordButton type="button" onClick={() => console.log('Forgot password clicked')}>Forgot Password?</ForgotPasswordButton>
+                    <IconInput>
+                        <i className="icon-password" />
+                        <Input 
+                            type="password" 
+                            placeholder="Password" 
+                            value={password} 
+                            onChange={(e) => setPassword(e.target.value)}
+                            onFocus={() => setPasswordFocused(true)} 
+                            onBlur={() => setPasswordFocused(false)}
+                            disabled={isLoading}
+                        />
+                    </IconInput>
                 </InputGroup>
                 <Row>
-                    <LinkText href="#">Forgot Password?</LinkText>
-                    <LinkText href="#">Sign Up</LinkText>
+                    <RememberMe>
+                        <input 
+                            type="checkbox" 
+                            id="rememberMe" 
+                            checked={rememberMe} 
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            disabled={isLoading}
+                        />
+                        <label htmlFor="rememberMe">Remember me for 30 days</label>
+                    </RememberMe>
                 </Row>
                 <Button 
                     type="submit" 
@@ -91,7 +134,18 @@ const LoginPage: React.FC = () => {
                 >
                     {isLoading ? 'Signing In...' : 'Sign In'}
                 </Button>
+                <DontHaveAccountText>Don't have an account?</DontHaveAccountText>
+                <SignUpButton type="button" onClick={() => console.log('Sign up clicked')}>Sign Up</SignUpButton>
             </Form>
+            <SystemStatus>
+                <i className="icon-status" />
+                All Systems Operational
+            </SystemStatus>
+            <Footer>
+                <FooterLink href="#">System Status</FooterLink>
+                <FooterLink href="#">Privacy Policy</FooterLink>
+                <FooterLink href="#">Documentation</FooterLink>
+            </Footer>
         </Container>
     );
 };

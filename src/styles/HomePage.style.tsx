@@ -46,6 +46,12 @@ export const ColoredBenchmarking = styled.span`
     letter-spacing: 1px;
 `;
 
+export const ColoredFlowSmith = styled.span`
+    color: #ff6b35;
+    font-weight: bold;
+    letter-spacing: 1px;
+`;
+
 export const CardsWrapper = styled.div`
     display: flex;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

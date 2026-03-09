@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "../../styles/LoginPage.styles";
-import { CardsWrapper, ColoredAutomation, ColoredExecution, ColoredReporting, ColoredBenchmarking, FeatureCard, Heading2, Heading3 } from "../../styles/HomePage.style";
+import { CardsWrapper, ColoredAutomation, ColoredExecution, ColoredReporting, ColoredBenchmarking, ColoredFlowSmith, FeatureCard, Heading2, Heading3 } from "../../styles/HomePage.style";
 import { useNavigate } from "react-router-dom";
 
 const HomePage: React.FC = () => {
@@ -36,6 +36,11 @@ With Test Ease, teams achieve higher efficiency, better collaboration, and impro
                 <img src="/icons/benchmark.png" alt="Benchmark" style={{ width: "75px", height: "75px" }} />
                     <h3><ColoredBenchmarking>Benchmark</ColoredBenchmarking></h3>
                     <p>Compare and analyze performance metrics across different test runs and environments.</p>
+                </FeatureCard>
+                <FeatureCard onClick={() => handleCardClick('/flowsmith')}>
+                    <img src="/icons/flowsmith.png" alt="Flow Smith" style={{width: "75px",height: "75px",transform: "scale(1.5)",transformOrigin: "center",display: "block", margin: "0 auto",}}/>
+                    <h3><ColoredFlowSmith>Flow Smith</ColoredFlowSmith></h3>
+                    <p>Visually architect and orchestrate complex testing workflows using a node-based drag-and-drop interface.</p>
                 </FeatureCard>
             </CardsWrapper>
         </Container>
