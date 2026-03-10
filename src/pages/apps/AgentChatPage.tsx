@@ -52,6 +52,27 @@ import AddPersona from "../../components/AddPersona";
 import LiveConversationGrid from "../../components/LiveConversationGrid";
 import { ApiEndpoints, getApiUrl } from "../../utils/constants";
 import LiveConversation from "../../components/LiveConversation";
+import styled from "styled-components";
+
+const StyledAgentChatPage = styled.div`
+  .AgentChatPage {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .AgentChatPage .header {
+    background-color: #007BFF;
+  }
+
+  .AgentChatPage .button {
+    background-color: #007BFF;
+    color: #fff;
+  }
+
+  .AgentChatPage .progress-bar {
+    background-color: #007BFF;
+  }
+`;
 
 // Define interface for API response
 interface PersonaResponse {
