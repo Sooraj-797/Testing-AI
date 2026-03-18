@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Container, Form, UnderlineText, GlowingAutomation, Heading1, Heading2, Heading3, Input, InputGroup, Label, Row, Title, RememberMe, SystemStatus, Footer, FooterLink, IconInput, Header, HeaderLogo, HeaderLinks, HeaderLink, TextLabel, ForgotPasswordButton, SignUpButton, DontHaveAccountText, AnnouncementBadge, AnnouncementDot, AnnouncementText, Dot, StatsContainer, StatItem, StatValue, StatLabel, StatDivider, CopyrightText } from '../../styles/LoginPage.styles';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import type { User } from '../../types/conversation.types';
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +14,7 @@ const LoginPage: React.FC = () => {
     const [rememberMe, setRememberMe] = useState(false);
 
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,8 +29,44 @@ const LoginPage: React.FC = () => {
         
         try {
             await new Promise(resolve => setTimeout(resolve, 1500));
-            console.log('Login attempt with:', { email, password, rememberMe });
-            navigate('/home');
+            
+            // Hardcoded credentials for testing
+            const adminCredentials = {
+                email: 'admin@testforge.ai',
+                password: 'admin123'
+            };
+            
+            const testerCredentials = {
+                email: 'tester@testforge.ai',
+                password: 'tester123'
+            };
+            
+            // Check credentials and create user object accordingly
+            if (email === adminCredentials.email && password === adminCredentials.password) {
+                const adminUser: User = {
+                    id: '1',
+                    username: 'operator-01',
+                    role: 'admin',
+                    email: email
+                };
+                login(adminUser);
+                console.log('Admin login successful');
+                navigate('/admin-home');
+            } else if (email === testerCredentials.email && password === testerCredentials.password) {
+                const testerUser: User = {
+                    id: '2',
+                    username: 'tester-01',
+                    role: 'tester',
+                    email: email
+                };
+                login(testerUser);
+                console.log('Tester login successful');
+                navigate('/home');
+            } else {
+                setFormError('Invalid email or password');
+                setIsLoading(false);
+                return;
+            }
         } catch (error) {
             setFormError('An error occurred. Please try again.');
             console.error('Login error:', error);

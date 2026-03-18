@@ -73,4 +73,11 @@ export interface EvaluationResponse {
   personaID: string;
   agent: string;
   conversationEvaluation: ConversationEvaluation;
+}
+
+export interface User {
+  id: string;
+  username: string;
+  role: 'admin' | 'tester';
+  email: string;
 } 

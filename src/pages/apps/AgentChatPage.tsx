@@ -45,34 +45,73 @@ import {
     NavLinks,
     NavLink,
     ChatTitle,
-    UploadButton
+    UploadButton,
+    // Dashboard
+    DashboardContainer,
+    DashboardHeader,
+    DashboardTitleRow,
+    DashboardTitle,
+    DashboardSubtitle,
+    DashboardHeaderActions,
+    OutlineButton,
+    PrimaryButton,
+    DashboardBody,
+    DashboardColumn,
+    ColumnHeader,
+    ColumnTitle,
+    ColumnBadge,
+    ColumnScroll,
+    ModelItem,
+    ModelIconBox,
+    ModelInfo,
+    ModelName,
+    ModelOrg,
+    ModelMeta,
+    StatusBadge,
+    ResponseTime,
+    SystemStatusBox,
+    SystemStatusTitle,
+    SystemStatusText,
+    TestRunsGrid,
+    TestRunCard,
+    TestRunCardHeader,
+    TestRunTitle,
+    TestRunMeta,
+    TestRunProgressLabel,
+    ProgressBarWrap,
+    ProgressBarFill,
+    PersonaAvatarRow,
+    PersonaAvatar,
+    AvatarCount,
+    TestRunCardFooter,
+    RunningBadge,
+    OpenLink,
+    ViewAllRow,
+    ViewAllLink,
+    MetricCard,
+    MetricIconBox,
+    MetricInfo,
+    MetricLabel,
+    MetricValue,
+    MetricDelta,
+    LiveActivitySection,
+    LiveActivityHeader,
+    LiveActivityTitle,
+    RealtimeBadge,
+    ActivityList,
+    ActivityItem,
+    ActivityIconBox,
+    ActivityContent,
+    ActivityTitle,
+    ActivityDesc,
+    ActivityTime,
+    StatusDot,
 } from "../../styles/AgentChat.styles";
 import { AddIcon, AgentPersonaIcon, UploadIcon } from "../../utils/Icons";
 import AddPersona from "../../components/AddPersona";
 import LiveConversationGrid from "../../components/LiveConversationGrid";
 import { ApiEndpoints, getApiUrl } from "../../utils/constants";
 import LiveConversation from "../../components/LiveConversation";
-import styled from "styled-components";
-
-const StyledAgentChatPage = styled.div`
-  .AgentChatPage {
-    background-color: #000;
-    color: #fff;
-  }
-
-  .AgentChatPage .header {
-    background-color: #007BFF;
-  }
-
-  .AgentChatPage .button {
-    background-color: #007BFF;
-    color: #fff;
-  }
-
-  .AgentChatPage .progress-bar {
-    background-color: #007BFF;
-  }
-`;
 
 // Define interface for API response
 interface PersonaResponse {
@@ -181,6 +220,7 @@ const getMockConversationResponse = (sessionID: number, personaID: string, perso
 };
 
 const AgentChatPage: React.FC = () => {
+    const [pageView, setPageView] = useState<'dashboard' | 'hub'>('dashboard');
     const [selectedPersonas, setSelectedPersonas] = useState<(number | string)[]>([]);
     const [viewMode, setViewMode] = useState<'list' | 'chat'>('list');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -544,6 +584,206 @@ const AgentChatPage: React.FC = () => {
         setActiveConversations([]);
     }, []);
 
+    // ─── DASHBOARD VIEW ───────────────────────────────────────────────
+    if (pageView === 'dashboard') {
+        const models = [
+            { name: 'GPT-4o Omnimodel',     org: 'OpenAI',     status: 'ready' as const, ms: '142ms', icon: '⬡' },
+            { name: 'Claude 3.5 Sonnet',    org: 'Anthropic',  status: 'busy'  as const, ms: '210ms', icon: '◈' },
+            { name: 'Llama 3 70B Instruct', org: 'Meta',       status: 'ready' as const, ms: '89ms',  icon: '▲' },
+            { name: 'Gemini 1.5 Pro',       org: 'Google',     status: 'offline' as const, ms: '…',  icon: '◉' },
+            { name: 'Mistral Large 2',      org: 'Mistral AI', status: 'ready' as const, ms: '156ms', icon: '◈' },
+        ];
+
+        const testRuns = [
+            { title: 'Customer Support Stress Test',    model: 'GPT-4o',    ago: 'Started 12m ago', pct: 64,  completed: false },
+            { title: 'Legal Document Summarizer',       model: 'Claude 3.5', ago: '2 hours ago',    pct: 100, completed: true  },
+            { title: 'Creative Writing Persona Lab',    model: 'Llama 3',   ago: 'Started 2m ago',  pct: 12,  completed: false },
+            { title: 'Tech Documentation Audit',        model: 'GPT-4o',    ago: '5 hours ago',     pct: 100, completed: true  },
+        ];
+
+        const metrics = [
+            { icon: '💬', label: 'TOTAL CONVERSATIONS', value: '12.4k', delta: '+12%',   positive: true  },
+            { icon: '⏱',  label: 'AVG RESPONSE TIME',   value: '1.2s',  delta: '−40ms', positive: true  },
+            { icon: '✓',  label: 'EVAL SUCCESS RATE',   value: '98.2%', delta: '+0.5%', positive: true  },
+        ];
+
+        const activities = [
+            { type: 'success' as const, icon: '✓', title: 'Run #4830 Completed',   desc: 'Evaluation report generated for 150 conversations.', time: '2m ago'  },
+            { type: 'info'    as const, icon: '▶', title: 'New Test Run Started',   desc: '"Creative Writing Persona Lab" initiated with 18 agents.', time: '14m ago' },
+            { type: 'add'     as const, icon: '+', title: 'Model Connected',         desc: 'Claude 3.5 Sonnet successfully linked via API.',  time: '1h ago'  },
+        ];
+
+        return (
+            <DashboardContainer>
+                {/* ── Header ── */}
+                <DashboardHeader>
+                    <DashboardTitleRow>
+                        <DashboardTitle>
+                            <span style={{ color: '#007BFF', fontSize: '1.5rem' }}>⚡</span>
+                            Agent Chat Dashboard
+                        </DashboardTitle>
+                        <DashboardSubtitle>
+                            Scale your AI model testing with automated persona-driven conversations. Monitor live test runs,
+                            manage endpoint models, and evaluate performance across diverse scenarios.
+                        </DashboardSubtitle>
+                    </DashboardTitleRow>
+                    <DashboardHeaderActions>
+                        <OutlineButton>+ Add Model</OutlineButton>
+                        <PrimaryButton onClick={() => setPageView('hub')}>
+                            <span style={{ fontSize: '0.85rem' }}>⊙</span> Create Test Run
+                        </PrimaryButton>
+                    </DashboardHeaderActions>
+                </DashboardHeader>
+
+                {/* ── Three-column body ── */}
+                <DashboardBody>
+
+                    {/* LEFT: Model Inventory */}
+                    <DashboardColumn>
+                        <ColumnHeader>
+                            <ColumnTitle>
+                                <span>⊞</span> Model Inventory
+                            </ColumnTitle>
+                            <ColumnBadge>{models.length + 3} Total</ColumnBadge>
+                        </ColumnHeader>
+                        <ColumnScroll>
+                            {models.map((m, i) => (
+                                <ModelItem key={i}>
+                                    <ModelIconBox>{m.icon}</ModelIconBox>
+                                    <ModelInfo>
+                                        <ModelName>{m.name}</ModelName>
+                                        <ModelOrg>{m.org}</ModelOrg>
+                                    </ModelInfo>
+                                    <ModelMeta>
+                                        <StatusBadge status={m.status}>
+                                            {m.status.charAt(0).toUpperCase() + m.status.slice(1)}
+                                        </StatusBadge>
+                                        <ResponseTime>{m.ms}</ResponseTime>
+                                    </ModelMeta>
+                                </ModelItem>
+                            ))}
+                            <SystemStatusBox>
+                                <SystemStatusTitle>
+                                    <span style={{ color: '#007BFF' }}>∼</span> System Status
+                                </SystemStatusTitle>
+                                <SystemStatusText>
+                                    All systems operational. Global latency is within 15% of baseline. 3 models currently experiencing high traffic.
+                                </SystemStatusText>
+                            </SystemStatusBox>
+                        </ColumnScroll>
+                    </DashboardColumn>
+
+                    {/* MIDDLE: Active Test Runs */}
+                    <DashboardColumn>
+                        <ColumnHeader>
+                            <ColumnTitle>
+                                <span>▶</span> Active Test Runs
+                            </ColumnTitle>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.72rem', color: '#8a94a6' }}>
+                                <span><StatusDot color="#007BFF" />2 Running</span>
+                                <span><StatusDot color="#38a169" />14 Completed</span>
+                            </span>
+                        </ColumnHeader>
+                        <TestRunsGrid>
+                            {testRuns.map((run, i) => (
+                                <TestRunCard key={i}>
+                                    <TestRunCardHeader>
+                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                            <TestRunTitle>{run.title}</TestRunTitle>
+                                            <TestRunMeta>
+                                                <span style={{
+                                                    background: '#1a1e2e',
+                                                    border: '1px solid #232640',
+                                                    borderRadius: '5px',
+                                                    padding: '0.1rem 0.45rem',
+                                                    fontSize: '0.7rem',
+                                                    color: '#c8d0e0',
+                                                    fontWeight: 500,
+                                                }}>{run.model}</span>
+                                                <span style={{ color: '#3a3f55' }}>•</span>
+                                                <span>⏱</span> {run.ago}
+                                            </TestRunMeta>
+                                        </div>
+                                        <span style={{ color: '#444c60', fontSize: '1.1rem', cursor: 'pointer', flexShrink: 0 }}>⋯</span>
+                                    </TestRunCardHeader>
+                                    <TestRunProgressLabel>
+                                        <span>Overall Progress</span>
+                                        <span style={{ color: '#e2e8f0', fontWeight: 600 }}>{run.pct}%</span>
+                                    </TestRunProgressLabel>
+                                    <ProgressBarWrap>
+                                        <ProgressBarFill pct={run.pct} color={run.completed ? '#007BFF' : '#007BFF'} />
+                                    </ProgressBarWrap>
+                                    <PersonaAvatarRow>
+                                        {[...Array(4)].map((_, j) => (
+                                            <PersonaAvatar key={j}>P</PersonaAvatar>
+                                        ))}
+                                        <AvatarCount>12</AvatarCount>
+                                    </PersonaAvatarRow>
+                                    <TestRunCardFooter>
+                                        <RunningBadge completed={run.completed}>
+                                            {run.completed ? 'Completed' : 'Running'}
+                                        </RunningBadge>
+                                        <OpenLink onClick={() => setPageView('hub')}>
+                                            Open ↗
+                                        </OpenLink>
+                                    </TestRunCardFooter>
+                                </TestRunCard>
+                            ))}
+                        </TestRunsGrid>
+                        <ViewAllRow>
+                            <ViewAllLink>View All Test History</ViewAllLink>
+                        </ViewAllRow>
+                    </DashboardColumn>
+
+                    {/* RIGHT: Performance Metrics + Live Activity */}
+                    <DashboardColumn>
+                        <ColumnHeader>
+                            <ColumnTitle>
+                                <span>⌇</span> Performance Metrics
+                            </ColumnTitle>
+                        </ColumnHeader>
+                        <ColumnScroll>
+                            {metrics.map((m, i) => (
+                                <MetricCard key={i}>
+                                    <MetricIconBox>{m.icon}</MetricIconBox>
+                                    <MetricInfo>
+                                        <MetricLabel>{m.label}</MetricLabel>
+                                        <MetricValue>
+                                            {m.value}
+                                            <MetricDelta positive={m.positive}>{m.delta}</MetricDelta>
+                                        </MetricValue>
+                                    </MetricInfo>
+                                </MetricCard>
+                            ))}
+                        </ColumnScroll>
+                        <LiveActivitySection>
+                            <LiveActivityHeader>
+                                <LiveActivityTitle>
+                                    <span style={{ color: '#007BFF' }}>∿</span> Live Activity
+                                </LiveActivityTitle>
+                                <RealtimeBadge>Real-time</RealtimeBadge>
+                            </LiveActivityHeader>
+                            <ActivityList>
+                                {activities.map((a, i) => (
+                                    <ActivityItem key={i}>
+                                        <ActivityIconBox type={a.type}>{a.icon}</ActivityIconBox>
+                                        <ActivityContent>
+                                            <ActivityTitle>{a.title}</ActivityTitle>
+                                            <ActivityDesc>{a.desc}</ActivityDesc>
+                                            <ActivityTime>{a.time}</ActivityTime>
+                                        </ActivityContent>
+                                    </ActivityItem>
+                                ))}
+                            </ActivityList>
+                        </LiveActivitySection>
+                    </DashboardColumn>
+
+                </DashboardBody>
+            </DashboardContainer>
+        );
+    }
+    // ──────────────────────────────────────────────────────────────────
+
     return (
         <AgentHubContainer>
             <HeaderSection>
@@ -556,8 +796,23 @@ const AgentChatPage: React.FC = () => {
                         <Subtitle>Parallel conversations between personas and AI agents</Subtitle>
                     </TitleContainer>
                 </LogoContainer>
-                
+
                 <ControlsSection>
+                    <button
+                        onClick={() => setPageView('dashboard')}
+                        style={{
+                            background: 'transparent',
+                            border: '1px solid #333',
+                            color: '#a0aec0',
+                            borderRadius: '6px',
+                            padding: '0.4rem 0.75rem',
+                            cursor: 'pointer',
+                            fontSize: '0.85rem',
+                            marginRight: '0.25rem',
+                        }}
+                    >
+                        ← Dashboard
+                    </button>
                     <SelectContainer>
                         <Select value={selectedAgent} onChange={handleAgentChange}>
                             <option>I&E Agent</option>
